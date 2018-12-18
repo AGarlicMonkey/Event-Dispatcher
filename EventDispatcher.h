@@ -1,12 +1,6 @@
 #include <list>
-
-/////////PAIR
-template<typename T>
-struct Pair{
-	//VARIABLES
-public:
-	T* context;
-};
+#include <utility>
+#include <functional>
 
 /////////EVENT DISPATCHER
 template<typename RetType = void, typename... FuncArgs>
@@ -14,14 +8,19 @@ class EventDispatcher{
 
 	//VARIABLES
 private:
-	//std::list
-	//RetType(*function)(FuncArgs...);
+	//std::list<std::pair<void*, (RetType(void::*function)(FuncArgs...))>> targets;
+
+	//RetType(*)(FuncArgs...);
+
+	std::function<RetType(FuncArgs...)> function;
 
 	//FUNCTIONS
 public:
 	RetType broadcast(FuncArgs... args);
 
-	template<typename T>
+	int bind(std::function<RetType(FuncArgs...)> function);
+	
+	template<typename T> 
 	int bind(T* context, RetType(T::*function)(FuncArgs...));
 
 	bool unbind(int ID);
