@@ -1,25 +1,23 @@
 #include <list>
-#include <utility>
 #include <functional>
 
 /////////EVENT DISPATCHER
 template<typename RetType = void, typename... FuncArgs>
 class EventDispatcher{
 
+	//DEFINITION
+private:
+	using FuncType = std::function<RetType(FuncArgs...)>;
+
 	//VARIABLES
 private:
-	//std::list<std::pair<void*, (RetType(void::*function)(FuncArgs...))>> targets;
-
-	//RetType(*)(FuncArgs...);
-
-	std::function<RetType(FuncArgs...)> function;
+	std::list<FuncType> targets;
 
 	//FUNCTIONS
 public:
 	RetType broadcast(FuncArgs... args);
 
 	int bind(std::function<RetType(FuncArgs...)> function);
-	
 	template<typename T> 
 	int bind(T* context, RetType(T::*function)(FuncArgs...));
 
