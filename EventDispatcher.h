@@ -5,34 +5,40 @@
 template<typename RetType = void, typename... FuncArgs>
 class EventDispatcher{
 
-	//DEFINITION
+	//DEFINITIONS
 private:
 	using FuncType = std::function<RetType(FuncArgs...)>;
 
+	struct Pair{
+		//VARIABLES
+	public:
+		int ID = -1;
+		FuncType function;
+
+		//FUNCTIONS
+	public:
+		Pair(int inID, const FuncType &inFunction)
+			: ID(inID)
+			, function(inFunction)
+		{ }
+	};
+
 	//VARIABLES
 private:
-	std::list<FuncType> targets;
+	int nextID = 0;
+
+	std::list<Pair> targets;
 
 	//FUNCTIONS
 public:
 	RetType broadcast(FuncArgs... args);
 
-	int bind(std::function<RetType(FuncArgs...)> function);
+	int bind(FuncType function);
 	template<typename T> 
 	int bind(T* context, RetType(T::*function)(FuncArgs...));
 
-	bool unbind(int ID);
+	void unbind(int ID);
 };
 
 /////////INLINE INCLUDE
 #include "EventDispatcher.inl"
-
-/*
-HOW WILL THIS WORK?
--How to bind to the delegate?
--How to broadcast the delegate?
---will probably need a struct made for broadcasting (like ue)
--How to handle ret params?
--How to handle param types?
---How to handle multiple params?
-*/

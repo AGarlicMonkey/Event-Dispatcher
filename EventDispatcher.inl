@@ -1,14 +1,15 @@
 template<typename RetType, typename... FuncArgs>
 inline RetType EventDispatcher<RetType, FuncArgs...>::broadcast(FuncArgs... args){
-	for(auto& target : targets){
-		target(args...);
+	for(Pair& target : targets){
+		target.function(args...);
 	}
 }
 
 template<typename RetType, typename... FuncArgs>
-inline int EventDispatcher<RetType, FuncArgs...>::bind(std::function<RetType(FuncArgs...)> function){
-	targets.push_back(function);
-	return -1;
+inline int EventDispatcher<RetType, FuncArgs...>::bind(FuncType function){
+	int funcID = nextID++;
+	targets.push_back({ funcID, function });
+	return funcID;
 }
 
 template<typename RetType, typename... FuncArgs>
@@ -18,6 +19,8 @@ inline int EventDispatcher<RetType, FuncArgs...>::bind(T* context, RetType(T::*f
 }
 
 template<typename RetType, typename... FuncArgs>
-inline bool EventDispatcher<RetType, FuncArgs...>::unbind(int ID){
-	return false;
+inline void EventDispatcher<RetType, FuncArgs...>::unbind(int ID){
+	targets.remove_if([ID](const Pair& target){
+		return target.ID == ID;
+	});
 }
