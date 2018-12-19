@@ -1,5 +1,5 @@
 #include <list>
-#include <functional>
+//#include <functional>
 
 /////////EVENT DISPATCHER
 template<typename RetType = void, typename... FuncArgs>
@@ -7,27 +7,34 @@ class Event{
 
 	//DEFINITIONS
 private:
-	using FuncType = std::function<RetType(FuncArgs...)>;
-
-	struct Pair{
+	template<typename T>
+	struct FunctionCache{
 		//VARIABLES
 	public:
 		int ID = -1;
-		FuncType function;
+		
+		T* context;
+		RetType(T::*function)(FuncArgs...);
 
 		//FUNCTIONS
 	public:
-		Pair(int inID, const FuncType &inFunction)
+		FunctionCache(int inID, T* inContext, RetType(T::*inFunction)(FuncArgs...))
 			: ID(inID)
+			, context(inContext)
 			, function(inFunction)
 		{ }
+
+		RetType invoke(FuncArgs... args){
+			return (context->*function)(args...);
+		}
 	};
 
 	//VARIABLES
 private:
 	int nextID = 0;
 
-	std::list<Pair> targets;
+	//template<typename T>
+	//std::list<FunctionCache> targets;
 
 	//FUNCTIONS
 public:
@@ -38,7 +45,6 @@ public:
 
 	template<typename T> 
 	int bind(T* context, RetType(T::*function)(FuncArgs...));
-	int bind(FuncType function);
 
 	void unbind(int ID);
 };
