@@ -31,11 +31,14 @@ private:
 
 	//FUNCTIONS
 public:
+	Event() = default;
+	~Event() = default;
+
 	RetType broadcast(FuncArgs... args);
 
-	int bind(FuncType function);
 	template<typename T> 
 	int bind(T* context, RetType(T::*function)(FuncArgs...));
+	int bind(FuncType function);
 
 	void unbind(int ID);
 };
