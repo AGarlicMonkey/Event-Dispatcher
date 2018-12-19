@@ -3,7 +3,7 @@
 
 /////////EVENT DISPATCHER
 template<typename RetType = void, typename... FuncArgs>
-class EventDispatcher{
+class Event{
 
 	//DEFINITIONS
 private:
