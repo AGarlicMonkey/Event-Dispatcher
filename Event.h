@@ -91,4 +91,4 @@ namespace agm{
 }
 
 /////////INLINE INCLUDE
-#include "EventDispatcher.inl"
+#include "Event.inl"
