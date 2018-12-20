@@ -87,6 +87,7 @@ namespace agm{
 		template<typename T>
 		int bind(T* context, void(T::*function)(FuncArgs...));
 		void unbind(int ID);
+		void unbindAll();
 	};
 }
 

@@ -33,10 +33,7 @@ inline void agm::SingleEvent<RetType, FuncArgs...>::unbind(){
 /////////MULTI EVENT
 template<typename... FuncArgs>
 inline agm::MultiEvent<FuncArgs...>::~MultiEvent(){
-	targets.remove_if([](typename EventBase<void, FuncArgs...>::CacheBase* target){
-		delete target;
-		return true;
-	});
+	unbindAll();
 }
 
 template<typename... FuncArgs>
@@ -64,5 +61,13 @@ inline void agm::MultiEvent<FuncArgs...>::unbind(int ID){
 		} else{
 			return false;
 		}
+	});
+}
+
+template<typename... FuncArgs>
+inline void agm::MultiEvent<FuncArgs...>::unbindAll(){
+	targets.remove_if([](typename EventBase<void, FuncArgs...>::CacheBase* target){
+		delete target;
+		return true;
 	});
 }
