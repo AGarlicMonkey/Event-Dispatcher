@@ -20,13 +20,13 @@ agm::SingleEvent<> myEvent;
 ```
 Note the empty template parameters. This specifies the return type of the event is void and that the event will not take any parameters.
 You can also define it as:
-```C+++
+```C++
 agm::SingleEvent<void> myEvent;
 ```
 to achieve the same effect. You need either empty template parameters or pass in void.
 
 You can now bind to a function like so:
-```C+++
+```C++
 class Foo{
 	void bar(){
 		//...
