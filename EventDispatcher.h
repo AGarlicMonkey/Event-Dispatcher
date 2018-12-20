@@ -47,7 +47,7 @@ public:
 };
 
 /////////SINGLE EVENT
-template<typename RetType = void, typename... FuncArgs>
+template<typename RetType, typename... FuncArgs>
 class SingleEvent : public EventBase<RetType, FuncArgs...>{
 	
 	//VARIABLES

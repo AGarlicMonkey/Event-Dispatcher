@@ -27,6 +27,7 @@ inline void SingleEvent<RetType, FuncArgs...>::bind(T* context, RetType(T::*func
 template<typename RetType, typename... FuncArgs>
 inline void SingleEvent<RetType, FuncArgs...>::unbind(){
 	delete target;
+	target = nullptr;
 }
 
 /////////MULTI EVENT
