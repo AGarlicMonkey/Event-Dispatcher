@@ -48,7 +48,7 @@ namespace agm{
 	};
 
 	/////////SINGLE EVENT
-	template<typename RetType, typename... FuncArgs>
+	template<typename RetType = void, typename... FuncArgs>
 	class SingleEvent : public EventBase<RetType, FuncArgs...>{
 
 		//VARIABLES
