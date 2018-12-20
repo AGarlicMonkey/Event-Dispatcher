@@ -14,7 +14,7 @@ Version 1.0.0
 A ```SingleEvent``` is an event dispatcher that can bind to a single function. It can take any type of return type and any number and types of function parameters.
 
 ### Usage
-You can initialise a ```Single Event``` that returns void and takes 0 parameters like so:
+You can initialise a ```SingleEvent``` that returns void and takes 0 parameters like so:
 ```C+++
 agm::SingleEvent<> myEvent;
 ```
