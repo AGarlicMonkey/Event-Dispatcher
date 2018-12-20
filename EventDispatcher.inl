@@ -50,9 +50,9 @@ template<typename... FuncArgs>
 template<typename T>
 inline int MultiEvent<FuncArgs...>::bind(T* context, void(T::*function)(FuncArgs...)){
 	int ID = nextID++;
-	EventBase<void, FuncArgs...>::FunctionCache<T>* newCache = new typename EventBase<void, FuncArgs...>::FunctionCache<T>(nextID, context, function);
+	EventBase<void, FuncArgs...>::FunctionCache<T>* newCache = new typename EventBase<void, FuncArgs...>::FunctionCache<T>(ID, context, function);
 	targets.push_back(newCache);
-	return nextID;
+	return ID;
 }
 
 template<typename... FuncArgs>
@@ -61,6 +61,8 @@ inline void MultiEvent<FuncArgs...>::unbind(int ID){
 		if(target->ID == ID){
 			delete target;
 			return true;
+		} else{
+			return false;
 		}
 	});
 }
